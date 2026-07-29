@@ -1281,6 +1281,181 @@ button:disabled {
   font-size: 13px;
 }
 
+.history-member-summary {
+  display: grid;
+  gap: 15px;
+  padding: 20px;
+  border: 1px solid var(--line);
+  border-radius: 15px;
+  background:
+    radial-gradient(circle at 100% 0, rgba(211, 146, 43, 0.1), transparent 34%),
+    rgba(255, 253, 248, 0.78);
+}
+
+.history-summary-heading {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.history-summary-icon {
+  width: 43px;
+  height: 43px;
+  display: grid;
+  flex: none;
+  place-items: center;
+  border-radius: 11px;
+  background: rgba(211, 146, 43, 0.13);
+  color: var(--gold);
+}
+
+.history-summary-heading > div:nth-child(2) {
+  min-width: 0;
+  flex: 1;
+}
+
+.history-summary-heading span {
+  color: var(--gold);
+  font-size: 8px;
+  font-weight: 900;
+  letter-spacing: 0.16em;
+}
+
+.history-summary-heading h2 {
+  margin: 2px 0 3px;
+  font-family: "Yu Mincho", "Hiragino Mincho ProN", serif;
+  font-size: 19px;
+}
+
+.history-summary-heading p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 9px;
+  line-height: 1.6;
+}
+
+.history-summary-reset {
+  flex: none;
+}
+
+.history-member-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: 9px;
+}
+
+.history-member-card {
+  display: grid;
+  gap: 13px;
+  min-width: 0;
+  padding: 13px;
+  border: 1px solid var(--line);
+  border-radius: 11px;
+  background: var(--white);
+  color: var(--ink);
+  text-align: left;
+  transition:
+    border-color 0.18s ease,
+    background 0.18s ease,
+    transform 0.18s ease;
+}
+
+.history-member-card:hover {
+  transform: translateY(-1px);
+  border-color: rgba(29, 105, 116, 0.28);
+}
+
+.history-member-card.selected {
+  border-color: rgba(29, 105, 116, 0.48);
+  background: rgba(29, 105, 116, 0.07);
+  box-shadow: inset 0 0 0 1px rgba(29, 105, 116, 0.12);
+}
+
+.history-member-person {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+}
+
+.history-member-rank {
+  width: 20px;
+  flex: none;
+  color: var(--muted);
+  font-family: Georgia, serif;
+  font-size: 12px;
+  font-weight: 700;
+  text-align: center;
+}
+
+.history-member-person > div {
+  min-width: 0;
+}
+
+.history-member-person strong,
+.history-member-person > div span {
+  display: block;
+}
+
+.history-member-person strong {
+  overflow: hidden;
+  font-size: 12px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.history-member-person > div span {
+  margin-top: 2px;
+  color: var(--muted);
+  font-size: 8px;
+  letter-spacing: 0;
+}
+
+.history-member-metrics {
+  display: grid;
+  grid-template-columns: 0.8fr 1.2fr;
+  gap: 8px;
+}
+
+.history-member-metrics > div {
+  min-width: 0;
+  padding: 9px 10px;
+  border-radius: 8px;
+  background: var(--paper-deep);
+}
+
+.history-member-metrics span,
+.history-member-metrics strong {
+  display: block;
+}
+
+.history-member-metrics span {
+  color: var(--muted);
+  font-size: 7px;
+  font-weight: 800;
+  letter-spacing: 0;
+}
+
+.history-member-metrics strong {
+  overflow: hidden;
+  margin-top: 4px;
+  font-family: Georgia, "Yu Mincho", serif;
+  font-size: 16px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.history-member-metrics small {
+  margin-left: 3px;
+  color: var(--muted);
+  font-size: 7px;
+}
+
+.history-member-amount strong {
+  color: var(--teal);
+  font-size: 14px;
+}
+
 .rank-guide-page {
   gap: 24px;
 }
@@ -2642,6 +2817,10 @@ button:disabled {
     align-items: flex-start;
   }
 
+  .history-member-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
   .filter-bar {
     flex-wrap: wrap;
   }
@@ -2862,6 +3041,30 @@ button:disabled {
 
   .page-title .button {
     width: 100%;
+  }
+
+  .history-member-summary {
+    padding: 16px;
+  }
+
+  .history-summary-heading {
+    align-items: flex-start;
+    flex-wrap: wrap;
+  }
+
+  .history-summary-heading > div:nth-child(2) {
+    width: calc(100% - 55px);
+    flex: auto;
+  }
+
+  .history-summary-reset {
+    width: 100%;
+    justify-content: flex-start;
+    margin-left: 0;
+  }
+
+  .history-member-grid {
+    grid-template-columns: 1fr;
   }
 
   .rank-goal-card {
