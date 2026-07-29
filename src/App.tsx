@@ -1602,12 +1602,20 @@ function HistoryView({
 }: HistoryViewProps) {
   const [search, setSearch] = useState('')
   const [category, setCategory] = useState<'all' | MatchCategory>('all')
+  const [memberId, setMemberId] = useState<'all' | string>('all')
+  const memberTotals = useMemo(
+    () => (activeGroup ? getScores(activeGroup, matches) : []),
+    [activeGroup, matches],
+  )
 
   const filteredMatches = useMemo(() => {
     if (!activeGroup) return []
     return matches
       .filter((match) => match.groupId === activeGroup.id)
       .filter((match) => category === 'all' || match.category === category)
+      .filter(
+        (match) => memberId === 'all' || match.otokogiId === memberId,
+      )
       .filter((match) => {
         const member = activeGroup.members.find(
           (item) => item.id === match.otokogiId,
@@ -1620,7 +1628,7 @@ function HistoryView({
           b.playedAt.localeCompare(a.playedAt) ||
           b.createdAt.localeCompare(a.createdAt),
       )
-  }, [activeGroup, category, matches, search])
+  }, [activeGroup, category, matches, memberId, search])
 
   return (
     <div className="page-stack narrow-page">
@@ -1643,6 +1651,77 @@ function HistoryView({
 
       {activeGroup ? (
         <>
+          <section
+            className="history-member-summary"
+            aria-labelledby="history-member-summary-title"
+          >
+            <div className="history-summary-heading">
+              <div className="history-summary-icon">
+                <CircleDollarSign size={22} />
+              </div>
+              <div>
+                <span>INDIVIDUAL TOTALS</span>
+                <h2 id="history-member-summary-title">メンバー別累計</h2>
+                <p>
+                  順位とランクはポイントで決定。おごった金額は実績として個人別に集計します。
+                </p>
+              </div>
+              {memberId !== 'all' && (
+                <button
+                  type="button"
+                  className="link-button history-summary-reset"
+                  onClick={() => setMemberId('all')}
+                >
+                  全員の記録を表示
+                </button>
+              )}
+            </div>
+
+            <div className="history-member-grid">
+              {memberTotals.map((score, index) => (
+                <button
+                  type="button"
+                  className={`history-member-card ${
+                    memberId === score.member.id ? 'selected' : ''
+                  }`}
+                  key={score.member.id}
+                  onClick={() =>
+                    setMemberId((current) =>
+                      current === score.member.id ? 'all' : score.member.id,
+                    )
+                  }
+                  aria-pressed={memberId === score.member.id}
+                >
+                  <div className="history-member-person">
+                    <span className="history-member-rank">{index + 1}</span>
+                    <Avatar
+                      name={score.member.name}
+                      color={score.member.color}
+                      size="medium"
+                    />
+                    <div>
+                      <strong>{score.member.name}</strong>
+                      <span>{score.wins}回の男気</span>
+                    </div>
+                  </div>
+                  <div className="history-member-metrics">
+                    <div>
+                      <span>累計ポイント</span>
+                      <strong>
+                        {score.points}
+                        <small>PT</small>
+                      </strong>
+                    </div>
+                    <div className="history-member-amount">
+                      <span>累計おごり金額</span>
+                      <strong>{formatYen(score.paidAmount)}</strong>
+                    </div>
+                  </div>
+                </button>
+              ))}
+            </div>
+          </section>
+
           <div className="filter-bar">
             <label className="search-box">
               <Search size={18} />
@@ -1669,6 +1748,21 @@ function HistoryView({
                 <ChevronDown size={15} />
               </label>
             )}
+            <label className="filter-select">
+              <span className="sr-only">メンバー</span>
+              <select
+                value={memberId}
+                onChange={(event) => setMemberId(event.target.value)}
+              >
+                <option value="all">すべてのメンバー</option>
+                {memberTotals.map((score) => (
+                  <option key={score.member.id} value={score.member.id}>
+                    {score.member.name}
+                  </option>
+                ))}
+              </select>
+              <ChevronDown size={15} />
+            </label>
             <label className="filter-select">
               <span className="sr-only">カテゴリ</span>
               <select
@@ -1702,12 +1796,20 @@ function HistoryView({
           ) : (
             <InlineEmpty
               message={
-                search || category !== 'all'
+                search || category !== 'all' || memberId !== 'all'
                   ? '条件に一致する勝負はありません。'
                   : 'まだ勝負の記録がありません。'
               }
-              actionLabel={!search && category === 'all' ? '勝負を記録' : undefined}
-              onAction={!search && category === 'all' ? onCreateMatch : undefined}
+              actionLabel={
+                !search && category === 'all' && memberId === 'all'
+                  ? '勝負を記録'
+                  : undefined
+              }
+              onAction={
+                !search && category === 'all' && memberId === 'all'
+                  ? onCreateMatch
+                  : undefined
+              }
             />
           )}
         </>
