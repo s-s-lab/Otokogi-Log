@@ -1,0 +1,4 @@
+project_id = "otokogi-log"
+
+[functions.otokogi-api]
+verify_jwt = false
