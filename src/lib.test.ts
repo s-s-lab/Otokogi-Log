@@ -60,6 +60,34 @@ describe('getScores', () => {
       paidAmount: 2400,
     })
   })
+
+  it('おごった金額をメンバーごとに累計する', () => {
+    const additionalMatch: Match = {
+      id: 'm3',
+      groupId: 'g1',
+      playedAt: '2026-01-03',
+      stake: 'コーヒー',
+      category: 'drink',
+      otokogiId: 'b',
+      participantIds: ['a', 'b'],
+      points: 1,
+      paidAmount: 700,
+      memo: '',
+      createdAt: '2026-01-03',
+    }
+
+    const scores = getScores(group, [...matches, additionalMatch])
+    expect(scores.find((score) => score.member.id === 'a')).toMatchObject({
+      points: 3,
+      wins: 1,
+      paidAmount: 2400,
+    })
+    expect(scores.find((score) => score.member.id === 'b')).toMatchObject({
+      points: 2,
+      wins: 2,
+      paidAmount: 1200,
+    })
+  })
 })
 
 describe('getOtokogiLevel', () => {
