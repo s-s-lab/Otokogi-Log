@@ -1028,6 +1028,7 @@ button:disabled {
   background: var(--avatar-color);
   color: #fff;
   font-weight: 900;
+  line-height: 1;
   box-shadow: 0 0 0 1px rgba(23, 26, 28, 0.12);
 }
 
@@ -1587,19 +1588,19 @@ button:disabled {
   flex: 1;
 }
 
-.member-rank-person strong,
-.member-rank-person span {
+.member-rank-person > div > strong,
+.member-rank-person > div > span {
   display: block;
 }
 
-.member-rank-person strong {
+.member-rank-person > div > strong {
   overflow: hidden;
   font-size: 12px;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
 
-.member-rank-person span {
+.member-rank-person > div > span {
   margin-top: 2px;
   color: var(--muted);
   font-size: 8px;
