@@ -64,6 +64,7 @@ import type {
   ViewName,
 } from './types'
 import { OtokogiIllustration } from './components/OtokogiIllustration'
+import { NinjaAdMaxBanner } from './components/NinjaAdMaxBanner'
 import {
   buildShareHash,
   emptyState,
@@ -587,6 +588,8 @@ function App() {
           />
         )}
       </main>
+
+      <NinjaAdMaxBanner />
 
       <MobileNav
         view={view}
