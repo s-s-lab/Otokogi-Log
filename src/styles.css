@@ -16,8 +16,6 @@
   --gold: #d3922b;
   --line: rgba(23, 26, 28, 0.12);
   --shadow: 0 18px 50px rgba(43, 34, 25, 0.1);
-  /* Keep this in sync with the Ninja AdMax bottom banner size. */
-  --admax-banner-height: 50px;
 }
 
 * {
@@ -372,7 +370,37 @@ button:disabled {
 .main-content {
   width: min(100% - 48px, 1240px);
   margin: 0 auto;
-  padding: 52px 0 calc(80px + var(--admax-banner-height));
+  padding: 52px 0 40px;
+}
+
+.ninja-admax-banner {
+  width: min(100% - 48px, 728px);
+  min-height: 112px;
+  display: grid;
+  place-items: center;
+  gap: 7px;
+  margin: 0 auto 64px;
+  overflow: hidden;
+}
+
+.ninja-admax-label {
+  color: var(--muted);
+  font-size: 8px;
+  font-weight: 800;
+  letter-spacing: 0.2em;
+}
+
+.ninja-admax-banner-stage {
+  width: 728px;
+  height: 90px;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+}
+
+.ninja-admax-banner-stage .admax-ads {
+  width: 728px;
+  height: 90px;
 }
 
 .sync-alert,
@@ -2854,7 +2882,7 @@ button:disabled {
   }
 
   .main-content {
-    padding: 24px 0 calc(105px + var(--admax-banner-height));
+    padding: 24px 0 105px;
   }
 
   .sync-pill {
@@ -2865,7 +2893,7 @@ button:disabled {
     position: fixed;
     z-index: 50;
     right: 0;
-    bottom: var(--admax-banner-height);
+    bottom: 0;
     left: 0;
     display: grid;
     grid-template-columns: repeat(5, 1fr);
@@ -2876,6 +2904,10 @@ button:disabled {
     border-top: 1px solid var(--line);
     background: rgba(255, 253, 248, 0.94);
     backdrop-filter: blur(16px);
+  }
+
+  .ninja-admax-banner {
+    display: none;
   }
 
   .mobile-bottom-nav .nav-button {
